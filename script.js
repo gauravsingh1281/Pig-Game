@@ -66,25 +66,27 @@ btnRoll.addEventListener("click", () => {
 // Score holding functionality
 
 btnHold.addEventListener("click", () => {
-  if (gamePlaying) {
-    // Add current score to the total score of active player
-    totalScore[activePlayer] += currentScore;
-    document.getElementById(`score--${activePlayer}`).innerText =
-      totalScore[activePlayer];
+  if (currentScore > 0) {
+    if (gamePlaying) {
+      // Add current score to the total score of active player
+      totalScore[activePlayer] += currentScore;
+      document.getElementById(`score--${activePlayer}`).innerText =
+        totalScore[activePlayer];
 
-    if (totalScore[activePlayer] >= 20) {
-      // Finish Game
-      gamePlaying = false;
-      document
-        .querySelector(`.player--${activePlayer}`)
-        .classList.add("player--winner");
-      document
-        .querySelector(`.player--${activePlayer}`)
-        .classList.remove("player--active");
-      diceEle.classList.add("hidden");
-    } else {
-      // Switch to next player
-      switchPlayer();
+      if (totalScore[activePlayer] >= 20) {
+        // Finish Game
+        gamePlaying = false;
+        document
+          .querySelector(`.player--${activePlayer}`)
+          .classList.add("player--winner");
+        document
+          .querySelector(`.player--${activePlayer}`)
+          .classList.remove("player--active");
+        diceEle.classList.add("hidden");
+      } else {
+        // Switch to next player
+        switchPlayer();
+      }
     }
   }
 });
