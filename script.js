@@ -73,7 +73,7 @@ btnHold.addEventListener("click", () => {
       document.getElementById(`score--${activePlayer}`).innerText =
         totalScore[activePlayer];
 
-      if (totalScore[activePlayer] >= 20) {
+      if (totalScore[activePlayer] >= 100) {
         // Finish Game
         gamePlaying = false;
         document
@@ -83,6 +83,7 @@ btnHold.addEventListener("click", () => {
           .querySelector(`.player--${activePlayer}`)
           .classList.remove("player--active");
         diceEle.classList.add("hidden");
+        document.getElementById(`current--${activePlayer}`).innerText = 0;
       } else {
         // Switch to next player
         switchPlayer();
