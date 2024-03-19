@@ -7,21 +7,32 @@ const currentScore0Ele = document.getElementById("current--0");
 const currentScore1Ele = document.getElementById("current--1");
 const player0Ele = document.querySelector(".player--0");
 const player1Ele = document.querySelector(".player--1");
-
 const diceEle = document.querySelector(".dice");
-const btnNew = document.querySelector(".btn--new");
+const btnNewGame = document.querySelector(".btn--new");
 const btnRoll = document.querySelector(".btn--roll");
 const btnHold = document.querySelector(".btn--hold");
+let totalScore, currentScore, activePlayer, gamePlaying;
 
 // Starting Conditions
-const totalScore = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
-let gamePlaying = true;
 
-totalScore0Ele.innerText = 0;
-totalScore1Ele.innerText = 0;
-diceEle.classList.add("hidden");
+const initialState = () => {
+  totalScore = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  gamePlaying = true;
+
+  totalScore0Ele.innerText = 0;
+  totalScore1Ele.innerText = 0;
+  currentScore0Ele.innerText = 0;
+  currentScore1Ele.innerText = 0;
+  diceEle.classList.add("hidden");
+  player0Ele.classList.remove("player--winner");
+  player1Ele.classList.remove("player--winner");
+  player0Ele.classList.add("player--active");
+  player1Ele.classList.remove("player--active");
+};
+
+initialState();
 
 // Switch Player function
 const switchPlayer = () => {
@@ -77,3 +88,6 @@ btnHold.addEventListener("click", () => {
     }
   }
 });
+
+// Reset the game
+btnNewGame.addEventListener("click", initialState);
