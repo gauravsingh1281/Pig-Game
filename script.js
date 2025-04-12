@@ -1,22 +1,38 @@
 "use strict";
 
 //Selecting Elements
-const player1ScoreElem = document.getElementById("score--0");
-const player2ScoreElem = document.getElementById("score--1");
+//Here Player0 = Player 1 and Player1= Player 2
+const player0Elem = document.querySelector(".player--0");
+const player1Elem = document.querySelector(".player--1");
+const player0TotalScoreElem = document.getElementById("score--0");
+const player1TotalScoreElem = document.getElementById("score--1");
 const diceElem = document.querySelector(".dice");
 const newGameBtn = document.querySelector(".btn--new");
 const rollDiceBtn = document.querySelector(".btn--roll");
 const holdBtn = document.querySelector(".btn--hold");
 
 //Initial State
-player1ScoreElem.textContent = 0;
-player2ScoreElem.textContent = 0;
+player0TotalScoreElem.textContent = 0;
+player1TotalScoreElem.textContent = 0;
 diceElem.classList.add("hidden");
+const playerTotalScores = [0, 0];
+let playerCurrentScore = 0;
+let activePlayer = 0;
 
 //Rolling dice functionality
 rollDiceBtn.addEventListener("click", function () {
   const diceValue = Math.trunc(Math.random() * 6) + 1;
   diceElem.classList.remove("hidden");
   diceElem.src = `./images/dice-${diceValue}.png`;
-  //diceElem.setAttribute("src", `./images/dice-${diceValue}.png`);
+  if (diceValue !== 1) {
+    playerCurrentScore += diceValue;
+    document.getElementById(`current--${activePlayer}`).textContent =
+      playerCurrentScore;
+  } else {
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
+    playerCurrentScore = 0;
+    activePlayer = activePlayer === 0 ? 1 : 0;
+    player0Elem.classList.toggle("player--active");
+    player1Elem.classList.toggle("player--active");
+  }
 });
