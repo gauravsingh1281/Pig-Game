@@ -19,6 +19,15 @@ const playerTotalScores = [0, 0];
 let playerCurrentScore = 0;
 let activePlayer = 0;
 
+// Function for Switching Player
+function swtichPlayer() {
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  playerCurrentScore = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  player0Elem.classList.toggle("player--active");
+  player1Elem.classList.toggle("player--active");
+}
+
 //Rolling dice functionality
 rollDiceBtn.addEventListener("click", function () {
   const diceValue = Math.trunc(Math.random() * 6) + 1;
@@ -29,10 +38,14 @@ rollDiceBtn.addEventListener("click", function () {
     document.getElementById(`current--${activePlayer}`).textContent =
       playerCurrentScore;
   } else {
-    document.getElementById(`current--${activePlayer}`).textContent = 0;
-    playerCurrentScore = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    player0Elem.classList.toggle("player--active");
-    player1Elem.classList.toggle("player--active");
+    swtichPlayer();
   }
+});
+
+// Score Holding functionality
+holdBtn.addEventListener("click", function () {
+  playerTotalScores[activePlayer] += playerCurrentScore;
+  document.getElementById(`score--${activePlayer}`).textContent =
+    playerTotalScores[activePlayer];
+  swtichPlayer();
 });
