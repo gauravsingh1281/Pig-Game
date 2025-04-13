@@ -6,19 +6,30 @@ const player0Elem = document.querySelector(".player--0");
 const player1Elem = document.querySelector(".player--1");
 const player0TotalScoreElem = document.getElementById("score--0");
 const player1TotalScoreElem = document.getElementById("score--1");
+const player0CurrentScoreElem = document.getElementById("current--0");
+const player1CurrentScoreElem = document.getElementById("current--1");
 const diceElem = document.querySelector(".dice");
 const newGameBtn = document.querySelector(".btn--new");
 const rollDiceBtn = document.querySelector(".btn--roll");
 const holdBtn = document.querySelector(".btn--hold");
+let playerTotalScores, playerCurrentScore, activePlayer, playing;
 
 //Initial State
-player0TotalScoreElem.textContent = 0;
-player1TotalScoreElem.textContent = 0;
-diceElem.classList.add("hidden");
-const playerTotalScores = [0, 0];
-let playerCurrentScore = 0;
-let activePlayer = 0;
-let playing = true;
+function initialState() {
+  playerTotalScores = [0, 0];
+  playerCurrentScore = 0;
+  activePlayer = 0;
+  playing = true;
+  player0TotalScoreElem.textContent = 0;
+  player1TotalScoreElem.textContent = 0;
+  player0CurrentScoreElem.textContent = 0;
+  player1CurrentScoreElem.textContent = 0;
+  diceElem.classList.add("hidden");
+  player0Elem.classList.remove("player--winner");
+  player0Elem.classList.add("player--active");
+  player1Elem.classList.remove("player--winner", "player--active");
+}
+initialState();
 
 // Function for Switching Player
 function swtichPlayer() {
@@ -51,8 +62,9 @@ holdBtn.addEventListener("click", function () {
     playerTotalScores[activePlayer] += playerCurrentScore;
     document.getElementById(`score--${activePlayer}`).textContent =
       playerTotalScores[activePlayer];
+
     // Checking for the winner
-    if (playerTotalScores[activePlayer] >= 100) {
+    if (playerTotalScores[activePlayer] >= 10) {
       playing = false;
       diceElem.classList.add("hidden");
       document
@@ -66,3 +78,7 @@ holdBtn.addEventListener("click", function () {
     }
   }
 });
+
+// Game reset
+
+newGameBtn.addEventListener("click", initialState);
