@@ -18,6 +18,7 @@ diceElem.classList.add("hidden");
 const playerTotalScores = [0, 0];
 let playerCurrentScore = 0;
 let activePlayer = 0;
+let playing = true;
 
 // Function for Switching Player
 function swtichPlayer() {
@@ -30,22 +31,38 @@ function swtichPlayer() {
 
 //Rolling dice functionality
 rollDiceBtn.addEventListener("click", function () {
-  const diceValue = Math.trunc(Math.random() * 6) + 1;
-  diceElem.classList.remove("hidden");
-  diceElem.src = `./images/dice-${diceValue}.png`;
-  if (diceValue !== 1) {
-    playerCurrentScore += diceValue;
-    document.getElementById(`current--${activePlayer}`).textContent =
-      playerCurrentScore;
-  } else {
-    swtichPlayer();
+  if (playing) {
+    const diceValue = Math.trunc(Math.random() * 6) + 1;
+    diceElem.classList.remove("hidden");
+    diceElem.src = `./images/dice-${diceValue}.png`;
+    if (diceValue !== 1) {
+      playerCurrentScore += diceValue;
+      document.getElementById(`current--${activePlayer}`).textContent =
+        playerCurrentScore;
+    } else {
+      swtichPlayer();
+    }
   }
 });
 
 // Score Holding functionality
 holdBtn.addEventListener("click", function () {
-  playerTotalScores[activePlayer] += playerCurrentScore;
-  document.getElementById(`score--${activePlayer}`).textContent =
-    playerTotalScores[activePlayer];
-  swtichPlayer();
+  if (playing) {
+    playerTotalScores[activePlayer] += playerCurrentScore;
+    document.getElementById(`score--${activePlayer}`).textContent =
+      playerTotalScores[activePlayer];
+    // Checking for the winner
+    if (playerTotalScores[activePlayer] >= 100) {
+      playing = false;
+      diceElem.classList.add("hidden");
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.add("player--winner");
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.remove("player--active");
+    } else {
+      swtichPlayer();
+    }
+  }
 });
