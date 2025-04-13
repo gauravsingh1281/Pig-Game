@@ -64,7 +64,7 @@ holdBtn.addEventListener("click", function () {
       playerTotalScores[activePlayer];
 
     // Checking for the winner
-    if (playerTotalScores[activePlayer] >= 10) {
+    if (playerTotalScores[activePlayer] >= 100) {
       playing = false;
       diceElem.classList.add("hidden");
       document
